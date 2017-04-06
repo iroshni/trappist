@@ -7,5 +7,11 @@ export class Question {
     questionDetail: string;
     questionType: QuestionType;
     difficultyLevel: DifficultyLevel;
-    categoryID: number;
+    category: Category;
+    singleMultipleAnswerQuestion: SingleMultipleAnswerQuestion;
+    codeSnippetQuestion: CodeSnippetQuestion;
+    isSelect: boolean = false;
+  
 }
+
+
