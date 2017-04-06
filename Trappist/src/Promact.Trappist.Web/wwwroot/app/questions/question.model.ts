@@ -8,9 +8,8 @@ export class Question {
     questionType: QuestionType;
     difficultyLevel: DifficultyLevel;
     category: Category;
-    singleMultipleAnswerQuestion: SingleMultipleAnswerQuestion;
-    codeSnippetQuestion: CodeSnippetQuestion;
     isSelect: boolean = false;
+    categoryID: number;
   
 }
 
