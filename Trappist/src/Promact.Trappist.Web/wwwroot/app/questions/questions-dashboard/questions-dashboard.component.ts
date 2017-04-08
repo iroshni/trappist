@@ -10,6 +10,7 @@ import { DifficultyLevel } from '../../questions/enum-difficultylevel';
 import { QuestionType } from '../../questions/enum-questiontype';
 import { Category } from '../../questions/category.model';
 import { RenameCategoryDialogComponent } from './rename-category-dialog.component';
+import { Question } from '../question.model';
 
 @Component({
     moduleId: module.id,
@@ -155,8 +156,15 @@ export class QuestionsDashboardComponent implements OnInit {
     }
 
     // Open delete question dialog
-    deleteQuestionDialog() {
-        this.dialog.open(DeleteQuestionDialogComponent);
+    deleteQuestionDialog(question: Question) {
+        let deleteDialogRef = this.dialog.open(DeleteQuestionDialogComponent);
+        deleteDialogRef.componentInstance.question = question;
+        deleteDialogRef.afterClosed().subscribe(
+            deletedQuestion => {
+                if (deletedQuestion !== null && deletedQuestion !== undefined) {
+                    this.questionDisplay.splice(this.questionDisplay.indexOf(deletedQuestion), 1);
+                }
+            });
     }
 
     /**

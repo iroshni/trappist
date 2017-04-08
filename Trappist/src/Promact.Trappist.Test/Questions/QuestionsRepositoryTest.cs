@@ -12,6 +12,7 @@ using Promact.Trappist.Web.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Microsoft.EntityFrameworkCore;
 
 namespace Promact.Trappist.Test.Questions
 {
@@ -193,6 +194,60 @@ namespace Promact.Trappist.Test.Questions
             await _questionRepository.AddCodeSnippetQuestionAsync(codingQuestion, applicationUser.Id);
 
             Assert.True(_trappistDbContext.Question.Count(x => x.QuestionDetail == codingQuestion.Question.QuestionDetail) == 1);
+        }
+
+        /// <summary>
+        /// Method to test delete Question
+        /// </summary>
+        [Fact]
+        public async Task DeleteQuestionTest()
+        {
+            string userName = "user@domain.com";
+            ApplicationUser user = new ApplicationUser() { Email = userName, UserName = userName };
+            await _userManager.CreateAsync(user);
+            var applicationUser = await _userManager.FindByEmailAsync(user.Email);
+            //Create code-snippet Question
+            var codingQuestion = await CreateCodingQuestion();
+            await _questionRepository.AddCodeSnippetQuestionAsync(codingQuestion, applicationUser.Id);
+            //Delete code-snippet Question
+            var questionId = await _trappistDbContext.Question.Select(x => x.Id).FirstOrDefaultAsync();
+            var questionToDelete = await _questionRepository.GetQuestionByIdAsync(questionId);
+            await _questionRepository.DeleteQuestionAsync(questionToDelete);
+            //Add single-multiple Question
+            var multipleAnswerQuestion = await CreateMultipleAnswerQuestion();
+            await _questionRepository.AddSingleMultipleAnswerQuestionAsync(multipleAnswerQuestion, applicationUser.Id);
+            //Delete single-Multiple Question
+            questionId = await _trappistDbContext.Question.Select(x => x.Id).FirstOrDefaultAsync();
+            questionToDelete = await _questionRepository.GetQuestionByIdAsync(questionId);
+            await _questionRepository.DeleteQuestionAsync(questionToDelete);
+            //True single-multiple & code-snippet Questions are both deleted 
+            Assert.True(_trappistDbContext.Question.Count() == 0);
+        }
+
+        /// <summary>
+        /// Method to test get Question by id
+        /// </summary>
+        [Fact]
+        public async Task GetQuestionByIdTest()
+        {
+            string userName = "user@domain.com";
+            ApplicationUser user = new ApplicationUser() { Email = userName, UserName = userName };
+            await _userManager.CreateAsync(user);
+            var applicationUser = await _userManager.FindByEmailAsync(user.Email);
+            //Create code-snippet Question
+            var codingQuestion = await CreateCodingQuestion();
+            await _questionRepository.AddCodeSnippetQuestionAsync(codingQuestion, applicationUser.Id);
+            //Get code-snippet Question
+            var questionId = await _trappistDbContext.Question.Select(x => x.Id).FirstOrDefaultAsync();
+            var question = await _questionRepository.GetQuestionByIdAsync(questionId);
+            //Add single-multiple Question
+            var multipleAnswerQuestion = await CreateMultipleAnswerQuestion();
+            await _questionRepository.AddSingleMultipleAnswerQuestionAsync(multipleAnswerQuestion, applicationUser.Id);
+            //Get single-Multiple Question
+            questionId = await _trappistDbContext.Question.Select(x => x.Id).FirstOrDefaultAsync();
+            question = await _questionRepository.GetQuestionByIdAsync(questionId);
+            //True if single-multiple and code-snippet Questions are found
+            Assert.True(_trappistDbContext.Question.Count() == 2);
         }
 
         /// <summary>
