@@ -58,4 +58,12 @@ export class TestService {
     updateTestName(id: number, body: Test) {
         return this.httpService.put(this.testApiUrl + '/' + id, body);
     }
+
+    addSelectedCategories(testCategory: any) {
+        return this.httpService.post(this.testApiUrl + '/' + 'selectedCategories', testCategory);
+    }
+
+    removeDeselectedCategory(id: number) {
+        return this.httpService.delete(this.testApiUrl + '/' + 'deselectCategory' + '/' + id)
+    }
 }
