@@ -53,5 +53,16 @@ namespace Promact.Trappist.Repository.Tests
         /// <param name="testObject">The parameter "testObject" is an object of Test</param>
         /// <returns>Updated Test Name</returns>
         Task UpdateTestNameAsync(int id, Test testObject);
+
+        #region Category Selection
+        /// <summary>
+        /// Add Selected Categories 
+        /// </summary>
+        /// <param name="testCategory"></param>
+        /// <returns>List of Selected Categories</returns>        
+        void SelectedCategoriesAsync(TestCategory[] testCategory);
+
+        Task DeselectCategoryAsync(int id);
+        #endregion
     }
 }

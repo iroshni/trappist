@@ -107,5 +107,21 @@ namespace Promact.Trappist.Core.Controllers
             else
                 return BadRequest();
         }
+
+        #region  Category selection
+        [HttpPost("selectedCategories")]
+        public ActionResult GetSelectedCategories([FromBody] TestCategory[] testCategory)
+        {
+            _testRepository.SelectedCategoriesAsync(testCategory);
+            return Ok(testCategory);
+        }
+
+        [HttpDelete("deselectCategory/{id}")]
+        public async Task<ActionResult> DeselectCategoriesAsync([FromRoute] int id)
+        {
+            await _testRepository.DeselectCategoryAsync(id);
+            return Ok();
+        }
+        #endregion
     }
 }

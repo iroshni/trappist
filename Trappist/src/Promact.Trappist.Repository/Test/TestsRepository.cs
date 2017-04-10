@@ -105,5 +105,20 @@ namespace Promact.Trappist.Repository.Tests
         {
             return await _dbContext.Test.AnyAsync(x => x.Id == id);
         }
+
+        #region Category selection
+        public void SelectedCategoriesAsync(TestCategory[] testCategory)
+        {
+            _dbContext.TestCategory.AddRange(testCategory);
+            _dbContext.SaveChanges();
+        }
+
+        public async Task DeselectCategoryAsync(int id)
+        {
+            var testCategory = await _dbContext.TestCategory.FindAsync(id);
+            _dbContext.TestCategory.Remove(testCategory);
+            await _dbContext.SaveChangesAsync();
+        }
+        #endregion
     }
 }
