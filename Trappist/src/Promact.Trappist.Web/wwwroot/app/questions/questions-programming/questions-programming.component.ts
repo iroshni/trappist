@@ -6,7 +6,7 @@ import { Category } from '../category.model';
 import { QuestionBase } from '../question';
 import { DifficultyLevel } from '../enum-difficultylevel';
 import { MdSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CodeSnippetQuestionsTestCases } from '../../questions/code-snippet-questions-test-cases.model';
 import { TestCaseType } from '../enum-test-case-type';
 
@@ -20,6 +20,8 @@ export class QuestionsProgrammingComponent implements OnInit {
 
     selectedLanguageList: string[];
     codingLanguageList: string[];
+    selectedCategory: Category;
+    selectedDifficulty: string;
     categoryList: Category[];
     questionModel: QuestionBase;
     formControlModel: FormControlModel;
@@ -28,6 +30,7 @@ export class QuestionsProgrammingComponent implements OnInit {
     isCategoryReady: boolean;
     isLanguageReady: boolean;
     isFormSubmitted: boolean;
+    isQuestionEditted: boolean;
     isTestCaseAdded: boolean;
     code: any;
     testCases: CodeSnippetQuestionsTestCases[];
@@ -41,23 +44,55 @@ export class QuestionsProgrammingComponent implements OnInit {
     constructor(private questionsService: QuestionsService,
         private categoryService: CategoryService,
         private snackBar: MdSnackBar,
-        private router: Router) {
+        private router: Router,
+        private route: ActivatedRoute) {
 
         this.nolanguageSelected = true;
         this.isCategoryReady = false;
         this.isLanguageReady = false;
+        this.isQuestionEditted = false;
         this.isTestCaseAdded = false;
         this.selectedLanguageList = new Array<string>();
         this.codingLanguageList = new Array<string>();
         this.categoryList = new Array<Category>();
         this.questionModel = new QuestionBase();
+        this.selectedCategory = new Category();
         this.formControlModel = new FormControlModel();
         this.testCases = new Array<CodeSnippetQuestionsTestCases>();
     }
 
     ngOnInit() {
-        this.getCodingLanguage();
-        this.getCategory();
+        let questionId = +this.route.snapshot.params['id'];
+        if (questionId === undefined
+            || questionId === null
+            || isNaN(questionId)) {
+            this.getCodingLanguage();
+            this.getCategory();
+        }
+        else {
+            this.isQuestionEditted = true;
+            this.prepareToEdit(questionId);
+        }
+    }
+
+    /**
+     * Prepares the form for editting
+     */
+    prepareToEdit(id: number) {
+        this.getQuestionById(id);
+    }
+
+    /**
+     * Gets Question of specific Id
+     * @param id: Id of the Question
+     */
+    getQuestionById(id: number) {
+        this.questionsService.getQuestionById(id).subscribe((response) => {
+            this.questionModel = response;
+            this.selectedDifficulty = DifficultyLevel[this.questionModel.question.difficultyLevel];
+            this.getCodingLanguage();
+            this.getCategory();
+        });
     }
 
     /**
@@ -74,6 +109,13 @@ export class QuestionsProgrammingComponent implements OnInit {
         this.questionsService.getCodingLanguage().subscribe((response) => {
             this.codingLanguageList = response;
             this.codingLanguageList.sort();
+
+            if (this.isQuestionEditted) {
+                this.codingLanguageList.forEach(x => {
+                    this.selectLanguage(x);
+                });
+            }
+
             this.isLanguageReady = true;
         });
     }
@@ -84,6 +126,11 @@ export class QuestionsProgrammingComponent implements OnInit {
     private getCategory() {
         this.categoryService.getAllCategories().subscribe((response) => {
             this.categoryList = response;
+
+            //If question is being editted then set the category
+            if (this.isQuestionEditted)
+                this.selectedCategory = this.categoryList.find(x => x.id === this.questionModel.question.categoryID);
+
             this.isCategoryReady = true;
         });
     }

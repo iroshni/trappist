@@ -77,7 +77,7 @@ namespace Promact.Trappist.Core.Controllers
         /// Coding language object of type CodingLanguageAC
         /// </returns>
         [HttpGet("codinglanguage")]
-        public async Task<IActionResult> GetAllCodingLanguages()
+        public async Task<IActionResult> GetAllCodingLanguagesAsync()
         {
             var codinglanguages = await _questionsRepository.GetAllCodingLanguagesAsync();
             return Ok(codinglanguages);
@@ -120,7 +120,7 @@ namespace Promact.Trappist.Core.Controllers
         /// QuestionAC class object
         /// </returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetQuestionById([FromRoute]int id)
+        public async Task<IActionResult> GetQuestionByIdAsync([FromRoute]int id)
         {
             if (id <= 0)
             {
