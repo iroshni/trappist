@@ -14,18 +14,19 @@ namespace Promact.Trappist.Core.Controllers
         {
             _testRepository = testRepository;
         }
+
         /// <summary>
         /// this method is to verify unique name of a test
         /// </summary>
         /// <param name="testName">name of the test</param>
         /// <returns>boolean</returns>
-
         [HttpGet("isUnique/{testName}/{id}")]
         public async Task<bool> IsTestNameUnique([FromRoute] string testName, [FromRoute] int id)
         {
             // verifying the test name is unique or not
             return await _testRepository.IsTestNameUniqueAsync(testName, id);
         }
+
         /// <summary>
         /// this method is used to add a new test 
         /// </summary>
@@ -42,6 +43,7 @@ namespace Promact.Trappist.Core.Controllers
             else
                 return BadRequest();
         }
+
         /// <summary>
         /// Get All Tests
         /// </summary>
