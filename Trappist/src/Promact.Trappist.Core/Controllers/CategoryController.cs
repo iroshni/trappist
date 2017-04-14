@@ -43,7 +43,7 @@ namespace Promact.Trappist.Core.Controllers
                 return BadRequest(ModelState);
             }
             //To trim leading,trailing and intermediate white spaces
-            category.CategoryName = StringExtensions.AllTrim(category.CategoryName);
+            category.CategoryName = category.CategoryName.AllTrim();
             if (await _categoryRepository.IsCategoryExistAsync(category.CategoryName, category.Id))
             {
                 ModelState.AddModelError(_stringConstants.ErrorKey, _stringConstants.CategoryNameExistsError);
@@ -67,7 +67,7 @@ namespace Promact.Trappist.Core.Controllers
                 return BadRequest(ModelState);
             }
             //To trim leading,trailing and intermediate white spaces
-            category.CategoryName = StringExtensions.AllTrim(category.CategoryName);
+            category.CategoryName = category.CategoryName.AllTrim();
             var categoryToUpdate = await _categoryRepository.GetCategoryByIdAsync(category.Id);
             if (categoryToUpdate == null)
             {
