@@ -3,6 +3,7 @@ import { Category } from '../category.model';
 import { CategoryService } from '../categories.service';
 import { MdDialogRef, MdSnackBar } from '@angular/material';
 import { QuestionsDashboardComponent } from './questions-dashboard.component';
+import { RemoveWhiteSpace } from './../../shared/whitespace-remove.module';
 
 @Component({
     moduleId: module.id,
@@ -40,7 +41,7 @@ export class AddCategoryDialogComponent {
      */
     addCategory(category: Category) {
         if (category.categoryName) {
-            category.categoryName = category.categoryName.trim();
+            //category.categoryName = category.categoryName.trim();
             this.categoryService.addCategory(category).subscribe(
                 result => {
                     this.responseObject = result;

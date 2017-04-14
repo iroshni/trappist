@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { CKEditorModule } from 'ng2-ckeditor';
 
 import { SharedModule } from './shared/shared.module';
+import { BlankNameValidatorDirective } from './shared/whitespace-remove.module';
 import { CoreModule } from './core/core.module';
 import { QuestionsModule } from './questions/questions.module';
 import { TestsModule } from './tests/tests.module';
@@ -19,21 +20,20 @@ import { ProfileModule } from './profile/profile.module';
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
-        appRouting,
         SharedModule,
+        appRouting,        
         CoreModule,
         QuestionsModule,
         TestsModule,
         ProfileModule,
         FormsModule,
-        CKEditorModule
+        CKEditorModule      
     ],
-    providers: [
-
+    providers: [        
     ],
 
     declarations: [
-        AppComponent
+        AppComponent        
     ]
 })
 export class AppModule { }
