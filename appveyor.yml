@@ -24,6 +24,6 @@ test_script:
 - ps: >-
    cd ./trappist/src/promact.trappist.test
 - ps: >-
-   OpenCover.Console.exe -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test " -filter:"+[Promact.Trappist.Repository*]*" -hideskipped:File -output:opencover.xml -oldStyle
+   OpenCover.Console.exe -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test -f netcoreapp1.1 -c Release .\src\Promact.Trappist.Test\Promact.Trappist.Test.csproj" -filter:"+[Promact.Trappist.Repository*]*" -hideskipped:File -output:opencover.xml -oldStyle
      
 
