@@ -1,25 +1,24 @@
 version: 1.0.{build}
 os: Visual Studio 2017
 skip_tags: true
-configuration: Debug
+configuration: Release
+environment:
+ COVERALLS_REPO_TOKEN:
+   secure: oI8JLO5/25+ZMrrWdVckNz5zqUysVlU+VVMBpPxZlEXaQ/A/6z544OcIs8rVhk49
+install:
+- cd ".\Trappist\"
+- ps: Start-FileDownload 'https://ci.appveyor.com/api/buildjobs/xj78v6dac42uob8q/artifacts/main%2Fbin%2Fzip%2Fopencover.4.6.589.zip'
+- ps: 7z.exe x main%2Fbin%2Fzip%2Fopencover.4.6.589.zip
 build_script:
-- ps: dotnet restore ./Trappist/Trappist.sln
-branches:
-  only:
-    - development
+- ps: dotnet restore
 build:
   project: .\Trappist\Trappist.sln
   verbosity: minimal
 test_script:
 - ps: >-
-   cd ./trappist/src/promact.trappist.unittests
-- ps: >-
-   opencover.4.6.589\OpenCover.Console.exe -register:Path32 "-target:c:\program files\dotnet\dotnet.exe" "-targetargs:test" -oldstyle -output:opencover.xml
-- ps: >-
-   cd bin/debug/netcoreapp1.1
-- ps: >-
-   ls
-
-
-     
-
+   .\OpenCover.Console.exe -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test -f netcoreapp1.1 -c Release .\src\Promact.Trappist.UnitTests\Promact.Trappist.UnitTests.csproj" -filter:"+[Promact.Trappist.*]*" -mergeoutput -hideskipped:File -output:opencover.xml -oldStyle
+   if(![string]::IsNullOrEmpty($env:COVERALLS_REPO_TOKEN)){
+   $coveralls = (Resolve-Path "C:\Users\appveyor\.nuget\packages\coveralls.net\0.8.0-unstable0013\tools\csmacnz.coveralls.exe").ToString()
+   
+   & $coveralls --opencover -i opencover.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID
+   }   
