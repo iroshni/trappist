@@ -14,6 +14,8 @@ test_script:
 - ps: >-
    cd ./trappist/src/promact.trappist.unittests
 - ps: >-
+   C:\Windows\system32\regsvr32.exe /s  /n /i:user "opencover.4.6.589\x86\OpenCover.Profiler.dll"
+- ps: >-
    opencover.4.6.589\OpenCover.Console.exe -register:user "-target:c:\program files\dotnet\dotnet.exe" "-targetargs:test" -filter:+[Promact.Trappist*]* -oldstyle -output:opencover.xml
 
 
