@@ -15,8 +15,7 @@ branches:
 install:
 - ls 
 - echo $PATH
-- @echo %PATH%
-- @echo $PATH
+- echo %PATH%
 build:
   project: .\Trappist\Trappist.sln
   verbosity: minimal
