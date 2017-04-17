@@ -15,7 +15,10 @@ test_script:
    cd ./trappist/src/promact.trappist.unittests
 - ps: >-
    opencover.4.6.589\OpenCover.Console.exe -register:Path32 "-target:c:\program files\dotnet\dotnet.exe" "-targetargs:test" -filter:+[*]* -oldstyle -output:opencover.xml
-   
+- ps: >-
+   cd bin/debug/netcoreapp1.1
+- ps: >-
+   ls
 
 
      
