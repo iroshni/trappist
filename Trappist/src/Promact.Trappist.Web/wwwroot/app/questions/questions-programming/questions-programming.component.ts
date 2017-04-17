@@ -92,6 +92,8 @@ export class QuestionsProgrammingComponent implements OnInit {
             (response) => {
                 this.questionModel = response;
                 this.selectedDifficulty = DifficultyLevel[this.questionModel.question.difficultyLevel];
+                this.testCases = this.questionModel.codeSnippetQuestion.testCases;
+                this.formControlModel.showTestCase = true;
                 this.getCodingLanguage();
                 this.getCategory();
             },
@@ -185,6 +187,11 @@ export class QuestionsProgrammingComponent implements OnInit {
      */
     selectDifficulty(difficulty: string) {
         this.questionModel.question.difficultyLevel = DifficultyLevel[difficulty];
+    }
+
+    //Converts enum of type TestCaseType to string
+    getTestCaseString(testCase: TestCaseType) {
+        return TestCaseType[testCase];
     }
 
     /**
