@@ -14,14 +14,15 @@ branches:
     - master
 install:
 - ls 
+- echo $PATH
+- @echo %PATH%
+- @echo $PATH
 build:
   project: .\Trappist\Trappist.sln
   verbosity: minimal
 test_script:
 - ps: >-
    cd ./trappist/src/promact.trappist.test
-- ps: >-
-   echo $PATH
 - ps: >-
    ls
 - ps: >-
