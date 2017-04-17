@@ -13,7 +13,7 @@ branches:
     - staging
     - master
 install:
-- ps:ls
+- ls
 build:
   project: .\Trappist\Trappist.sln
   verbosity: minimal
