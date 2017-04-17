@@ -21,7 +21,9 @@ build:
   verbosity: minimal
 test_script:
 - ps: >-
-   cd ./trappist/src/promact.trappist.test & ls
+   cd ./trappist/src/promact.trappist.test
+- ps: >-
+   ls
 - ps: >-
    OpenCover.Console.exe -register:user "-target:C:\Program Files\dotnet\dotnet.exe" "-targetargs:test -c debug" -filter:"+[Promact.Trappist*]*" -hideskipped:File -output:opencover.xml -oldStyle
      
