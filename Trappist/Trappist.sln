@@ -22,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Promact.Trappist.Utility", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Promact.Trappist.Test", "src\Promact.Trappist.Test\Promact.Trappist.Test.csproj", "{A6299789-A0DE-4F72-A48B-0B74F4F44EB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promact.Trappist.UnitTests", "Promact.Trappist.UnitTests\Promact.Trappist.UnitTests.csproj", "{D92F0DCC-E450-420E-8A1A-5F4CE2C1DAA6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Promact.Trappist.UnitTests", "src\Promact.Trappist.UnitTests\Promact.Trappist.UnitTests.csproj", "{D92F0DCC-E450-420E-8A1A-5F4CE2C1DAA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
