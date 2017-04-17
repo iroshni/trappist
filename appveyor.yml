@@ -4,32 +4,18 @@ skip_tags: true
 configuration: Debug
 build_script:
 - ps: dotnet restore ./Trappist/Trappist.sln
-environment:  
-  COVERALLS_REPO_TOKEN:
-  secure: oI8JLO5/25+ZMrrWdVckNz5zqUysVlU+VVMBpPxZlEXaQ/A/6z544OcIs8rVhk49
 branches:
   only:
     - development
-    - staging
-    - master
-install:
-- ls 
-- echo $PATH
-- echo %PATH%
 build:
   project: .\Trappist\Trappist.sln
   verbosity: minimal
 test_script:
 - ps: >-
-   cd ./trappist/src/promact.trappist.test
+   cd ./trappist/src/promact.trappist.unittests
 - ps: >-
-   ls
-- ps: >-
-   OpenCover.Console.exe -register:user "-target:C:\Program Files\dotnet\dotnet.exe" "-targetargs:test " -filter:"+[Promact.Trappist*]*" -hideskipped:File -output:opencover.xml -oldStyle
-- ps: >-
-   cd bin/debug/netcoreapp1.1 
-- ps: >-
-   ls
+   opencover.4.6.589\OpenCover.Console.exe -register:user "-target:c:\program files\dotnet\dotnet.exe" "-targetargs:test" -filter:+[Promact.Trappist*]* -oldstyle -output:opencover.xml
+
 
      
 
