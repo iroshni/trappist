@@ -21,7 +21,7 @@ test_script:
 - ps: >-
    cd ./trappist/src/promact.trappist.test
 - ps: >-
-   @echo %path% 
+   echo %PATH% 
 - ps: >-
    ls
 - ps: >-
